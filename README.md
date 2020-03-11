@@ -16,4 +16,4 @@ WDSocket.xcframework
 
 ## Demo application
 
-For your convenience we included demo application that shows the basic usage of ECR API. You can find it in Exmaple folder.
+For your convenience we included demo application that shows the basic usage of ECR API. You can find it in Example folder.
