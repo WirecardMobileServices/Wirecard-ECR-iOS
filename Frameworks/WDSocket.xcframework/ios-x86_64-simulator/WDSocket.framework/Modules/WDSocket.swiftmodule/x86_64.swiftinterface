@@ -1,0 +1,54 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)
+// swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name WDSocket
+import Combine
+import Foundation
+import Network
+import Swift
+import os
+public struct Connection {
+  public let host: Swift.String
+  public let port: Swift.UInt32
+  public init(host: Swift.String, port: Swift.UInt32)
+}
+public enum NetworkClientError : Swift.Error {
+  case generalError(_: Swift.Error)
+  case connectionError
+  case connectionBusy
+}
+extension NetworkClientError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public typealias SocketNetworkClient = WDSocket.NetworkClient & WDSocket.SocketConnection
+public protocol SocketConnection {
+  func write(_ data: Foundation.Data, with timeout: Swift.Double) -> Combine.AnyPublisher<Foundation.Data, WDSocket.NetworkClientError>
+}
+public protocol NetworkDataSubscription {
+  var subject: Combine.PassthroughSubject<Foundation.Data, WDSocket.NetworkClientError> { get }
+  var isClosed: Swift.Bool { get }
+  func append(_ dataToAppend: Foundation.Data)
+  func data() -> Foundation.Data
+  func error(_ error: Swift.Error)
+  func close()
+}
+@objc public class NetworkClient : ObjectiveC.NSObject {
+  final public let connection: WDSocket.Connection
+  public init(with connection: WDSocket.Connection)
+  public struct NetworkClientPublisher : Combine.Publisher {
+    public typealias Output = Foundation.Data
+    public typealias Failure = WDSocket.NetworkClientError
+    public func receive<S>(subscriber: S) where S : Combine.Subscriber, S.Failure == WDSocket.NetworkClient.NetworkClientPublisher.Failure, S.Input == WDSocket.NetworkClient.NetworkClientPublisher.Output
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public class TcpClient : WDSocket.SocketNetworkClient {
+  @objc deinit
+  public func write(_ data: Foundation.Data, with timeout: Swift.Double = 180.0) -> Combine.AnyPublisher<Foundation.Data, WDSocket.NetworkClientError>
+  override public init(with connection: WDSocket.Connection)
+}
+extension TcpClient : Foundation.StreamDelegate {
+  @objc dynamic public func stream(_ aStream: Foundation.Stream, handle eventCode: Foundation.Stream.Event)
+}
