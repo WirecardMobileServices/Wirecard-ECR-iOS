@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)
+// swift-compiler-version: Apple Swift version 5.2 (swiftlang-1103.0.32.1 clang-1103.0.32.29)
 // swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name WDEcr
 import Combine
 import Foundation
@@ -26,10 +26,10 @@ public protocol EcrRequestable {
 public class EcrRequest<Data> : Swift.Encodable, WDEcr.EcrRequestable where Data : Swift.Encodable {
   public var commandId: Swift.String {
     get
-    }
+  }
   public var data: Data {
     get
-    }
+  }
   public init(commandId: Swift.String, data: Data)
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
@@ -43,14 +43,14 @@ public protocol EcrResponsable : Swift.Decodable, Swift.Encodable {
 public class EcrResponse<Data> : Swift.Decodable, WDEcr.EcrResponsable where Data : Swift.Decodable, Data : Swift.Encodable {
   public var commandId: Swift.String {
     get
-    }
+  }
   public var data: Data {
     get
-    }
+  }
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
-  public typealias D = Data
   public func encode(to encoder: Swift.Encoder) throws
+  public typealias D = Data
 }
 public struct EmptyRequest : Swift.Encodable {
   public func encode(to encoder: Swift.Encoder) throws
@@ -67,18 +67,27 @@ public protocol ModelWrapper {
 extension EcrModel {
   public struct Echo : WDEcr.EcrModelable {
     public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.Echo.RequestBody> {
-      public init()
-      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Echo.RequestBody)
+      public init(deviceId: Swift.String? = nil)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Echo.RequestBody)
     }
     public struct RequestBody : Swift.Encodable {
+      public var deviceId: Swift.String? {
+        get
+      }
       public func encode(to encoder: Swift.Encoder) throws
     }
-    public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Echo.ResponseBody> {
-      required public init(from decoder: Swift.Decoder) throws
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Echo.ResponseBody> {
       @objc deinit
+      required public init(from decoder: Swift.Decoder) throws
     }
     public struct ResponseBody : Swift.Codable {
+      public var deviceId: Swift.String? {
+        get
+      }
+      public var status: WDEcr.EcrTypes.StatusCode? {
+        get
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -208,19 +217,22 @@ extension EcrTypes.StatusCode : Swift.Encodable {
 }
 extension EcrModel {
   public struct GetLastSettlement : WDEcr.EcrModelable {
-    public class Request : WDEcr.EcrRequest<WDEcr.EmptyRequest> {
+    public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.GetLastSettlement.RequestBody> {
       public var version: Swift.String {
         get
-        }
-      public init()
+      }
+      public init(deviceId: Swift.String? = nil)
       override public func encode(to encoder: Swift.Encoder) throws
-      override public init(commandId: Swift.String, data: WDEcr.EmptyRequest)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.GetLastSettlement.RequestBody)
     }
-    public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.GetLastSettlement.ResponseBody> {
+    public struct RequestBody : Swift.Encodable {
+      public func encode(to encoder: Swift.Encoder) throws
+    }
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.GetLastSettlement.ResponseBody> {
       public var version: Swift.String? {
         get
-        }
+      }
       required public init(from decoder: Swift.Decoder) throws
       override public func encode(to encoder: Swift.Encoder) throws
       @objc deinit
@@ -228,50 +240,50 @@ extension EcrModel {
     public struct ResponseBody : Swift.Codable {
       public var status: WDEcr.EcrTypes.StatusCode? {
         get
-        }
+      }
       public var totalBatchList: Swift.String? {
         get
-        }
+      }
       public var batchList: [WDEcr.EcrModel.GetLastSettlement.SettlementItem]? {
         get
-        }
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
     public struct SettlementItem : Swift.Codable {
       public var hostName: Swift.String? {
         get
-        }
+      }
       public var statusCode: WDEcr.EcrTypes.StatusCode? {
         get
-        }
+      }
       public var terminalId: Swift.String? {
         get
-        }
+      }
       public var merchantId: Swift.String? {
         get
-        }
+      }
       public var invoiceNumber: Swift.String? {
         get
-        }
+      }
       public var batchNumber: Swift.String? {
         get
-        }
+      }
       public var transactionDatetime: Swift.String? {
         get
-        }
+      }
       public var totalSaleCount: Swift.String? {
         get
-        }
+      }
       public var totalSaleAmount: Swift.String? {
         get
-        }
+      }
       public var totalRefundCount: Swift.String? {
         get
-        }
+      }
       public var totalRefundAmount: Swift.String? {
         get
-        }
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -279,73 +291,76 @@ extension EcrModel {
 }
 extension EcrModel {
   public struct GetLastTransaction : WDEcr.EcrModelable {
-    public class Request : WDEcr.EcrRequest<WDEcr.EmptyRequest> {
-      public init()
-      override public init(commandId: Swift.String, data: WDEcr.EmptyRequest)
+    public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.GetLastTransaction.RequestBody> {
+      public init(deviceId: Swift.String? = nil)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.GetLastTransaction.RequestBody)
     }
-    public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.GetLastTransaction.ResponseBody> {
-      required public init(from decoder: Swift.Decoder) throws
+    public struct RequestBody : Swift.Encodable {
+      public func encode(to encoder: Swift.Encoder) throws
+    }
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.GetLastTransaction.ResponseBody> {
       @objc deinit
+      required public init(from decoder: Swift.Decoder) throws
     }
     public struct ResponseBody : Swift.Codable {
       public var status: WDEcr.EcrTypes.StatusCode? {
         get
-        }
+      }
       public var lastCmdId: Swift.String? {
         get
-        }
+      }
       public var transactionAmount: Swift.String? {
         get
-        }
+      }
       public var orderId: Swift.String? {
         get
-        }
+      }
       public var maskedCardPan: Swift.String? {
         get
-        }
+      }
       public var cardType: Swift.String? {
         get
-        }
+      }
       public var terminalId: Swift.String? {
         get
-        }
+      }
       public var merchantId: Swift.String? {
         get
-        }
+      }
       public var invoiceNumber: Swift.String? {
         get
-        }
+      }
       public var batchNumber: Swift.String? {
         get
-        }
+      }
       public var transactionDatetime: Swift.String? {
         get
-        }
+      }
       public var cardholderName: Swift.String? {
         get
-        }
+      }
       public var approvalCode: Swift.String? {
         get
-        }
+      }
       public var rrn: Swift.String? {
         get
-        }
+      }
       public var entryMode: Swift.String? {
         get
-        }
+      }
       public var cvm: Swift.String? {
         get
-        }
+      }
       public var aid: Swift.String? {
         get
-        }
+      }
       public var appName: Swift.String? {
         get
-        }
+      }
       public var tc: Swift.String? {
         get
-        }
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -355,79 +370,120 @@ extension EcrModel {
   public struct Installment : WDEcr.EcrModelable {
     public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.Installment.RequestBody> {
       public init(requestBody: WDEcr.EcrModel.Installment.RequestBody)
-      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Installment.RequestBody)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Installment.RequestBody)
     }
     public struct RequestBody : Swift.Encodable {
-      public var transactionAmount: Swift.String
-      public var paymentType: WDEcr.EcrTypes.PaymentType
-      public var tenure: Swift.String?
-      public var orderId: Swift.String?
-      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, tenure: Swift.String? = nil, orderId: Swift.String? = nil)
+      public var transactionAmount: Swift.String {
+        get
+      }
+      public var paymentType: WDEcr.EcrTypes.PaymentType {
+        get
+      }
+      public var tenure: Swift.String? {
+        get
+      }
+      public var orderId: Swift.String? {
+        get
+      }
+      public var deviceId: Swift.String? {
+        get
+      }
+      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, tenure: Swift.String? = nil, orderId: Swift.String? = nil, deviceId: Swift.String? = nil)
       public func encode(to encoder: Swift.Encoder) throws
     }
-    public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Installment.ResponseBody> {
-      required public init(from decoder: Swift.Decoder) throws
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Installment.ResponseBody> {
       @objc deinit
+      required public init(from decoder: Swift.Decoder) throws
     }
     public struct ResponseBody : Swift.Codable {
       public var status: WDEcr.EcrTypes.StatusCode? {
         get
-        }
+      }
       public var transactionAmount: Swift.String? {
         get
-        }
+      }
       public var monthlyIppPayment: Swift.String? {
         get
-        }
+      }
       public var lastIppPayment: Swift.String? {
         get
-        }
+      }
       public var orderId: Swift.String? {
         get
-        }
+      }
       public var maskedCardPan: Swift.String? {
         get
-        }
+      }
       public var cardType: WDEcr.EcrTypes.CardType? {
         get
-        }
+      }
       public var terminalId: Swift.String? {
         get
-        }
+      }
       public var merchantId: Swift.String? {
         get
-        }
+      }
       public var invoiceNumber: Swift.String? {
         get
-        }
+      }
       public var batchNumber: Swift.String? {
         get
-        }
+      }
       public var transactionDatetime: Swift.String? {
         get
-        }
+      }
       public var cardholderName: Swift.String? {
         get
-        }
+      }
       public var approvalCode: Swift.String? {
         get
-        }
+      }
       public var rrn: Swift.String? {
         get
-        }
+      }
       public var entryMode: Swift.String? {
         get
-        }
+      }
       public var aid: Swift.String? {
         get
-        }
+      }
       public var appName: Swift.String? {
         get
-        }
+      }
       public var tc: Swift.String? {
         get
-        }
+      }
+      public init(from decoder: Swift.Decoder) throws
+      public func encode(to encoder: Swift.Encoder) throws
+    }
+  }
+}
+extension EcrModel {
+  public struct Pairing : WDEcr.EcrModelable {
+    public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.Pairing.RequestBody> {
+      public init(requestBody: WDEcr.EcrModel.Pairing.RequestBody)
+      @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Pairing.RequestBody)
+    }
+    public struct RequestBody : Swift.Encodable {
+      public var deviceId: Swift.String {
+        get
+      }
+      public init(deviceId: Swift.String)
+      public func encode(to encoder: Swift.Encoder) throws
+    }
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Pairing.ResponseBody> {
+      @objc deinit
+      required public init(from decoder: Swift.Decoder) throws
+    }
+    public struct ResponseBody : Swift.Codable {
+      public var deviceId: Swift.String? {
+        get
+      }
+      public var status: WDEcr.EcrTypes.StatusCode? {
+        get
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -437,75 +493,84 @@ extension EcrModel {
   public struct PreAuth : WDEcr.EcrModelable {
     public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.PreAuth.RequestBody> {
       public init(requestBody: WDEcr.EcrModel.PreAuth.RequestBody)
-      override public init(commandId: Swift.String, data: WDEcr.EcrModel.PreAuth.RequestBody)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.PreAuth.RequestBody)
     }
     public struct RequestBody : Swift.Encodable {
-      public var transactionAmount: Swift.String
-      public var paymentType: WDEcr.EcrTypes.PaymentType
-      public var orderId: Swift.String?
-      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, orderId: Swift.String? = nil)
+      public var transactionAmount: Swift.String {
+        get
+      }
+      public var paymentType: WDEcr.EcrTypes.PaymentType {
+        get
+      }
+      public var orderId: Swift.String? {
+        get
+      }
+      public var deviceId: Swift.String? {
+        get
+      }
+      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, orderId: Swift.String? = nil, deviceId: Swift.String? = nil)
       public func encode(to encoder: Swift.Encoder) throws
     }
-    public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.PreAuth.ResponseBody> {
-      required public init(from decoder: Swift.Decoder) throws
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.PreAuth.ResponseBody> {
       @objc deinit
+      required public init(from decoder: Swift.Decoder) throws
     }
     public struct ResponseBody : Swift.Codable {
       public var status: WDEcr.EcrTypes.StatusCode? {
         get
-        }
+      }
       public var transactionAmount: Swift.String? {
         get
-        }
+      }
       public var orderId: Swift.String? {
         get
-        }
+      }
       public var maskedCardPan: Swift.String? {
         get
-        }
+      }
       public var cardType: WDEcr.EcrTypes.CardType? {
         get
-        }
+      }
       public var terminalId: Swift.String? {
         get
-        }
+      }
       public var merchantId: Swift.String? {
         get
-        }
+      }
       public var invoiceNumber: Swift.String? {
         get
-        }
+      }
       public var batchNumber: Swift.String? {
         get
-        }
+      }
       public var transactionDatetime: Swift.String? {
         get
-        }
+      }
       public var cardholderName: Swift.String? {
         get
-        }
+      }
       public var approvalCode: Swift.String? {
         get
-        }
+      }
       public var rrn: Swift.String? {
         get
-        }
+      }
       public var entryMode: Swift.String? {
         get
-        }
+      }
       public var cvm: Swift.String? {
         get
-        }
+      }
       public var aid: Swift.String? {
         get
-        }
+      }
       public var appName: Swift.String? {
         get
-        }
+      }
       public var tc: Swift.String? {
         get
-        }
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -515,69 +580,72 @@ extension EcrModel {
   public struct Refund : WDEcr.EcrModelable {
     public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.Refund.RequestBody> {
       public init(requestBody: WDEcr.EcrModel.Refund.RequestBody)
-      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Refund.RequestBody)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Refund.RequestBody)
     }
     public struct RequestBody : Swift.Encodable {
       public var transactionAmount: Swift.String {
         get
-        }
+      }
       public var paymentType: WDEcr.EcrTypes.PaymentType {
         get
-        }
+      }
       public var orderId: Swift.String? {
         get
-        }
-      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, orderId: Swift.String? = nil)
+      }
+      public var deviceId: Swift.String? {
+        get
+      }
+      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, orderId: Swift.String? = nil, deviceId: Swift.String? = nil)
       public func encode(to encoder: Swift.Encoder) throws
     }
-    public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Refund.ResponseBody> {
-      required public init(from decoder: Swift.Decoder) throws
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Refund.ResponseBody> {
       @objc deinit
+      required public init(from decoder: Swift.Decoder) throws
     }
     public struct ResponseBody : Swift.Codable {
       public var status: WDEcr.EcrTypes.StatusCode? {
         get
-        }
+      }
       public var transactionAmount: Swift.String? {
         get
-        }
+      }
       public var orderId: Swift.String? {
         get
-        }
+      }
       public var maskedCardPan: Swift.String? {
         get
-        }
+      }
       public var cardType: WDEcr.EcrTypes.CardType? {
         get
-        }
+      }
       public var terminalId: Swift.String? {
         get
-        }
+      }
       public var merchantId: Swift.String? {
         get
-        }
+      }
       public var invoiceNumber: Swift.String? {
         get
-        }
+      }
       public var batchNumber: Swift.String? {
         get
-        }
+      }
       public var transactionDatetime: Swift.String? {
         get
-        }
+      }
       public var cardholderName: Swift.String? {
         get
-        }
+      }
       public var approvalCode: Swift.String? {
         get
-        }
+      }
       public var rrn: Swift.String? {
         get
-        }
+      }
       public var entryMode: Swift.String? {
         get
-        }
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -587,78 +655,87 @@ extension EcrModel {
   public struct Sale : WDEcr.EcrModelable {
     public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.Sale.RequestBody> {
       public init(requestBody: WDEcr.EcrModel.Sale.RequestBody)
-      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Sale.RequestBody)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Sale.RequestBody)
     }
     public struct RequestBody : Swift.Encodable {
-      public var transactionAmount: Swift.String
-      public var paymentType: WDEcr.EcrTypes.PaymentType
-      public var orderId: Swift.String?
-      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, orderId: Swift.String? = nil)
+      public var transactionAmount: Swift.String {
+        get
+      }
+      public var paymentType: WDEcr.EcrTypes.PaymentType {
+        get
+      }
+      public var orderId: Swift.String? {
+        get
+      }
+      public var deviceId: Swift.String? {
+        get
+      }
+      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, orderId: Swift.String? = nil, deviceId: Swift.String? = nil)
       public func encode(to encoder: Swift.Encoder) throws
     }
-    public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Sale.ResponseBody> {
-      required public init(from decoder: Swift.Decoder) throws
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Sale.ResponseBody> {
       @objc deinit
+      required public init(from decoder: Swift.Decoder) throws
     }
     public struct ResponseBody : Swift.Codable {
       public var status: WDEcr.EcrTypes.StatusCode? {
         get
-        }
+      }
       public var transactionAmount: Swift.String? {
         get
-        }
+      }
       public var orderId: Swift.String? {
         get
-        }
+      }
       public var tenure: Swift.String? {
         get
-        }
+      }
       public var maskedCardPan: Swift.String? {
         get
-        }
+      }
       public var cardType: WDEcr.EcrTypes.CardType? {
         get
-        }
+      }
       public var terminalId: Swift.String? {
         get
-        }
+      }
       public var merchantId: Swift.String? {
         get
-        }
+      }
       public var invoiceNumber: Swift.String? {
         get
-        }
+      }
       public var batchNumber: Swift.String? {
         get
-        }
+      }
       public var transactionDatetime: Swift.String? {
         get
-        }
+      }
       public var cardholderName: Swift.String? {
         get
-        }
+      }
       public var approvalCode: Swift.String? {
         get
-        }
+      }
       public var rrn: Swift.String? {
         get
-        }
+      }
       public var entryMode: Swift.String? {
         get
-        }
+      }
       public var cvm: Swift.String? {
         get
-        }
+      }
       public var aid: Swift.String? {
         get
-        }
+      }
       public var appName: Swift.String? {
         get
-        }
+      }
       public var tc: Swift.String? {
         get
-        }
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -668,15 +745,26 @@ extension EcrModel {
   public struct SaleCompletion : WDEcr.EcrModelable {
     public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.SaleCompletion.RequestBody> {
       public init(requestBody: WDEcr.EcrModel.SaleCompletion.RequestBody)
-      override public init(commandId: Swift.String, data: WDEcr.EcrModel.SaleCompletion.RequestBody)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.SaleCompletion.RequestBody)
     }
     public struct RequestBody : Swift.Encodable {
-      public var transactionAmount: Swift.String
-      public var paymentType: WDEcr.EcrTypes.PaymentType
-      public var rrn: Swift.String?
-      public var orderId: Swift.String?
-      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, rrn: Swift.String?, orderId: Swift.String? = nil)
+      public var transactionAmount: Swift.String {
+        get
+      }
+      public var paymentType: WDEcr.EcrTypes.PaymentType {
+        get
+      }
+      public var rrn: Swift.String? {
+        get
+      }
+      public var orderId: Swift.String? {
+        get
+      }
+      public var deviceId: Swift.String? {
+        get
+      }
+      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, rrn: Swift.String?, orderId: Swift.String? = nil, deviceId: Swift.String? = nil)
       public func encode(to encoder: Swift.Encoder) throws
     }
     public typealias Response = WDEcr.EcrModel.Sale.Response
@@ -684,19 +772,25 @@ extension EcrModel {
 }
 extension EcrModel {
   public struct Settlement : WDEcr.EcrModelable {
-    public class Request : WDEcr.EcrRequest<WDEcr.EmptyRequest> {
+    public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.Settlement.RequestBody> {
       public var version: Swift.String {
         get
-        }
-      public init()
+      }
+      public init(deviceId: Swift.String? = nil)
       override public func encode(to encoder: Swift.Encoder) throws
-      override public init(commandId: Swift.String, data: WDEcr.EmptyRequest)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Settlement.RequestBody)
     }
-    public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Settlement.ResponseBody> {
+    public struct RequestBody : Swift.Encodable {
+      public var deviceId: Swift.String? {
+        get
+      }
+      public func encode(to encoder: Swift.Encoder) throws
+    }
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Settlement.ResponseBody> {
       public var version: Swift.String? {
         get
-        }
+      }
       required public init(from decoder: Swift.Decoder) throws
       override public func encode(to encoder: Swift.Encoder) throws
       @objc deinit
@@ -704,13 +798,13 @@ extension EcrModel {
     public struct ResponseBody : Swift.Codable {
       public var status: WDEcr.EcrTypes.StatusCode? {
         get
-        }
+      }
       public var totalBatchList: Swift.String? {
         get
-        }
+      }
       public var batchList: [WDEcr.EcrModel.SettlementItem]? {
         get
-        }
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -718,37 +812,37 @@ extension EcrModel {
   public struct SettlementItem : Swift.Codable {
     public var hostName: Swift.String? {
       get
-      }
+    }
     public var statusCode: WDEcr.EcrTypes.StatusCode? {
       get
-      }
+    }
     public var terminalId: Swift.String? {
       get
-      }
+    }
     public var merchantId: Swift.String? {
       get
-      }
+    }
     public var invoiceNumber: Swift.String? {
       get
-      }
+    }
     public var batchNumber: Swift.String? {
       get
-      }
+    }
     public var transactionDatetime: Swift.String? {
       get
-      }
+    }
     public var totalSaleCount: Swift.String? {
       get
-      }
+    }
     public var totalSaleAmount: Swift.String? {
       get
-      }
+    }
     public var totalRefundCount: Swift.String? {
       get
-      }
+    }
     public var totalRefundAmount: Swift.String? {
       get
-      }
+    }
     public init(from decoder: Swift.Decoder) throws
     public func encode(to encoder: Swift.Encoder) throws
   }
@@ -757,25 +851,30 @@ extension EcrModel {
   public struct Tokenization : WDEcr.EcrModelable {
     public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.Tokenization.RequestBody> {
       public init(requestBody: WDEcr.EcrModel.Tokenization.RequestBody)
-      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Tokenization.RequestBody)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Tokenization.RequestBody)
     }
     public struct RequestBody : Swift.Encodable {
-      public var orderId: Swift.String?
-      public init(orderId: Swift.String? = nil)
+      public var orderId: Swift.String? {
+        get
+      }
+      public var deviceId: Swift.String? {
+        get
+      }
+      public init(orderId: Swift.String? = nil, deviceId: Swift.String? = nil)
       public func encode(to encoder: Swift.Encoder) throws
     }
-    public class Response : WDEcr.EcrResponse<[WDEcr.EcrModel.Tokenization.ResponseBody]> {
-      required public init(from decoder: Swift.Decoder) throws
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<[WDEcr.EcrModel.Tokenization.ResponseBody]> {
       @objc deinit
+      required public init(from decoder: Swift.Decoder) throws
     }
     public struct ResponseBody : Swift.Codable {
       public var tokenId: Swift.String? {
         get
-        }
+      }
       public var maskedCardPan: Swift.String? {
         get
-        }
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -785,76 +884,87 @@ extension EcrModel {
   public struct Void : WDEcr.EcrModelable {
     public class Request : WDEcr.EcrRequest<WDEcr.EcrModel.Void.RequestBody> {
       public init(requestBody: WDEcr.EcrModel.Void.RequestBody)
-      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Void.RequestBody)
       @objc deinit
+      override public init(commandId: Swift.String, data: WDEcr.EcrModel.Void.RequestBody)
     }
     public struct RequestBody : Swift.Encodable {
-      public var transactionAmount: Swift.String
-      public var paymentType: WDEcr.EcrTypes.PaymentType
-      public var invoiceNumber: Swift.String
-      public var orderId: Swift.String?
-      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, invoiceNumber: Swift.String, orderId: Swift.String? = nil)
+      public var transactionAmount: Swift.String {
+        get
+      }
+      public var paymentType: WDEcr.EcrTypes.PaymentType {
+        get
+      }
+      public var invoiceNumber: Swift.String {
+        get
+      }
+      public var orderId: Swift.String? {
+        get
+      }
+      public var deviceId: Swift.String? {
+        get
+      }
+      public init(transactionAmount: Swift.String, paymentType: WDEcr.EcrTypes.PaymentType, invoiceNumber: Swift.String, orderId: Swift.String? = nil, deviceId: Swift.String? = nil)
       public func encode(to encoder: Swift.Encoder) throws
     }
-    public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Void.ResponseBody> {
-      required public init(from decoder: Swift.Decoder) throws
+    @_inheritsConvenienceInitializers public class Response : WDEcr.EcrResponse<WDEcr.EcrModel.Void.ResponseBody> {
       @objc deinit
+      required public init(from decoder: Swift.Decoder) throws
     }
     public struct ResponseBody : Swift.Codable {
       public var status: WDEcr.EcrTypes.StatusCode? {
         get
-        }
+      }
       public var transactionAmount: Swift.String? {
         get
-        }
+      }
       public var orderId: Swift.String? {
         get
-        }
+      }
       public var maskedCardPan: Swift.String? {
         get
-        }
+      }
       public var cardType: WDEcr.EcrTypes.CardType? {
         get
-        }
+      }
       public var terminalId: Swift.String? {
         get
-        }
+      }
       public var merchantId: Swift.String? {
         get
-        }
+      }
       public var invoiceNumber: Swift.String? {
         get
-        }
+      }
       public var batchNumber: Swift.String? {
         get
-        }
+      }
       public var transactionDatetime: Swift.String? {
         get
-        }
+      }
       public var cardholderName: Swift.String? {
         get
-        }
+      }
       public var approvalCode: Swift.String? {
         get
-        }
+      }
       public var rrn: Swift.String? {
         get
-        }
+      }
       public var entryMode: Swift.String? {
         get
-        }
+      }
       public var cvm: Swift.String? {
         get
-        }
+      }
       public var aid: Swift.String? {
         get
-        }
+      }
       public var appName: Swift.String? {
         get
-        }
+      }
       public var tc: Swift.String? {
         get
-        }
+      }
       public init(from decoder: Swift.Decoder) throws
       public func encode(to encoder: Swift.Encoder) throws
     }
@@ -886,35 +996,34 @@ final public class TcpIpSession : WDEcr.Session {
 public protocol EcrApi {
   associatedtype D : WDEcr.Device
   init(device: Self.D)
-  func echo() -> WDEcr.EcrModel.Echo.Publisher
+  func echo(deviceId: Swift.String?) -> WDEcr.EcrModel.Echo.Publisher
+  func pairing(_ request: WDEcr.EcrModel.Pairing.RequestBody) -> WDEcr.EcrModel.Pairing.Publisher
   func sale(_ request: WDEcr.EcrModel.Sale.RequestBody) -> WDEcr.EcrModel.Sale.Publisher
   func installment(_ request: WDEcr.EcrModel.Installment.RequestBody) -> WDEcr.EcrModel.Installment.Publisher
   func refund(_ request: WDEcr.EcrModel.Refund.RequestBody) -> WDEcr.EcrModel.Refund.Publisher
   func preAuth(_ request: WDEcr.EcrModel.PreAuth.RequestBody) -> WDEcr.EcrModel.PreAuth.Publisher
   func saleCompletion(_ request: WDEcr.EcrModel.SaleCompletion.RequestBody) -> WDEcr.EcrModel.SaleCompletion.Publisher
   func void(_ request: WDEcr.EcrModel.Void.RequestBody) -> WDEcr.EcrModel.Void.Publisher
-  func settlement() -> WDEcr.EcrModel.Settlement.Publisher
-  func getLastTransaction() -> WDEcr.EcrModel.GetLastTransaction.Publisher
-  func getLastSettlement() -> WDEcr.EcrModel.GetLastSettlement.Publisher
+  func settlement(deviceId: Swift.String?) -> WDEcr.EcrModel.Settlement.Publisher
+  func getLastTransaction(deviceId: Swift.String?) -> WDEcr.EcrModel.GetLastTransaction.Publisher
+  func getLastSettlement(deviceId: Swift.String?) -> WDEcr.EcrModel.GetLastSettlement.Publisher
   func tokenization(_ request: WDEcr.EcrModel.Tokenization.RequestBody) -> WDEcr.EcrModel.Tokenization.Publisher
 }
 public class Ecr<D, W> : WDEcr.EcrApi where D : WDEcr.Device, W : WDEcr.ModelWrapper {
   required public init(device: D)
-  open func echo() -> WDEcr.EcrModel.Echo.Publisher
+  open func echo(deviceId: Swift.String? = nil) -> WDEcr.EcrModel.Echo.Publisher
+  public func pairing(_ request: WDEcr.EcrModel.Pairing.RequestBody) -> WDEcr.EcrModel.Pairing.Publisher
   public func sale(_ request: WDEcr.EcrModel.Sale.RequestBody) -> WDEcr.EcrModel.Sale.Publisher
   public func installment(_ request: WDEcr.EcrModel.Installment.RequestBody) -> WDEcr.EcrModel.Installment.Publisher
   public func refund(_ request: WDEcr.EcrModel.Refund.RequestBody) -> WDEcr.EcrModel.Refund.Publisher
   public func preAuth(_ request: WDEcr.EcrModel.PreAuth.RequestBody) -> WDEcr.EcrModel.PreAuth.Publisher
   public func saleCompletion(_ request: WDEcr.EcrModel.SaleCompletion.RequestBody) -> WDEcr.EcrModel.SaleCompletion.Publisher
   public func void(_ request: WDEcr.EcrModel.Void.RequestBody) -> WDEcr.EcrModel.Void.Publisher
-  public func settlement() -> WDEcr.EcrModel.Settlement.Publisher
-  public func getLastTransaction() -> WDEcr.EcrModel.GetLastTransaction.Publisher
-  public func getLastSettlement() -> WDEcr.EcrModel.GetLastSettlement.Publisher
+  public func settlement(deviceId: Swift.String? = nil) -> WDEcr.EcrModel.Settlement.Publisher
+  public func getLastTransaction(deviceId: Swift.String? = nil) -> WDEcr.EcrModel.GetLastTransaction.Publisher
+  public func getLastSettlement(deviceId: Swift.String? = nil) -> WDEcr.EcrModel.GetLastSettlement.Publisher
   public func tokenization(_ request: WDEcr.EcrModel.Tokenization.RequestBody) -> WDEcr.EcrModel.Tokenization.Publisher
   @objc deinit
-}
-extension Ecr {
-  public typealias Publisher = Combine.AnyPublisher<Foundation.Data, WDEcr.EcrTypes.Failure>
 }
 public struct JsonWrapper : WDEcr.ModelWrapper {
   public init()

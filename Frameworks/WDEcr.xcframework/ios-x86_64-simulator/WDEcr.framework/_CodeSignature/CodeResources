@@ -6,35 +6,35 @@
 	<dict>
 		<key>Headers/WDEcr-Swift.h</key>
 		<data>
-		ZzMeQyFNbXpioaNG6AqZKXrbla0=
+		LH5Ry/AggJt/Iyywigrfl9uHfJA=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		SHQwX8Mhd0gMnS0gTfvrozjW4IU=
+		w/Jxo/mvY/QD1TbxGxnUc+lejPU=
 		</data>
 		<key>Modules/WDEcr.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		GFr6OchsvYC6hAputO8oU/mRlfA=
+		yJnh2rUgWLXIpSOK8/nDifNEgSk=
 		</data>
 		<key>Modules/WDEcr.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		MClqNozIRHdgtLJ/+Au5nLxxNA0=
+		/btzcWK/3YQwLKIL6c8g5h2HHVI=
 		</data>
 		<key>Modules/WDEcr.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		9DhkhG141QJYwL/JFqUGxJUEh3Q=
+		uVVShXQT/ePohBQNORXsbhz0ZjU=
 		</data>
 		<key>Modules/WDEcr.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		GFr6OchsvYC6hAputO8oU/mRlfA=
+		yJnh2rUgWLXIpSOK8/nDifNEgSk=
 		</data>
 		<key>Modules/WDEcr.swiftmodule/x86_64.swiftinterface</key>
 		<data>
-		MClqNozIRHdgtLJ/+Au5nLxxNA0=
+		/btzcWK/3YQwLKIL6c8g5h2HHVI=
 		</data>
 		<key>Modules/WDEcr.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		9DhkhG141QJYwL/JFqUGxJUEh3Q=
+		uVVShXQT/ePohBQNORXsbhz0ZjU=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -43,49 +43,49 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ULIGio62I+rGQ+GuD+Vux+Jd5ySgmBmOE3rv356DV1o=
+			Mre2AHLM7kj+YziQP1CS+N8D9L/9Mo/xXLERwKF23fI=
 			</data>
 		</dict>
 		<key>Modules/WDEcr.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xgQSpMye2D3TaSg6kP0t5zxomGmBGXa2hgo0rWEEl8A=
+			1lBut/PMqH0lNlU0uvmB+9qWWTJy92kYt0IEd6mxank=
 			</data>
 		</dict>
 		<key>Modules/WDEcr.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YTMM3TdRGmJo7BFsvBMzkxWQWJq1Wmla4Xq5lxJUy1o=
+			VsX3Fs/FG4MbX9oEXeAYeE2wVq+cQMUQX/S5ZEsSHwo=
 			</data>
 		</dict>
 		<key>Modules/WDEcr.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			U1sszfMRVJbfeOvgSVvsJcj5hvUe3IUGI96LcysAFBo=
+			ApRFbo3b9tY7kdJyL6GU7j8ZgLiSdz8lYyA0DrF20Sw=
 			</data>
 		</dict>
 		<key>Modules/WDEcr.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xgQSpMye2D3TaSg6kP0t5zxomGmBGXa2hgo0rWEEl8A=
+			1lBut/PMqH0lNlU0uvmB+9qWWTJy92kYt0IEd6mxank=
 			</data>
 		</dict>
 		<key>Modules/WDEcr.swiftmodule/x86_64.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YTMM3TdRGmJo7BFsvBMzkxWQWJq1Wmla4Xq5lxJUy1o=
+			VsX3Fs/FG4MbX9oEXeAYeE2wVq+cQMUQX/S5ZEsSHwo=
 			</data>
 		</dict>
 		<key>Modules/WDEcr.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			U1sszfMRVJbfeOvgSVvsJcj5hvUe3IUGI96LcysAFBo=
+			ApRFbo3b9tY7kdJyL6GU7j8ZgLiSdz8lYyA0DrF20Sw=
 			</data>
 		</dict>
 	</dict>

@@ -14,6 +14,7 @@ struct PreAuthTransactionView: View {
     @Binding var amount: String
     @Binding var paymentType: EcrTypes.PaymentType?
     @Binding var orderId: String
+    @Binding var deviceId: String
 
     var body: some View{
         VStack(alignment: .center, spacing: 10) {
@@ -35,6 +36,10 @@ struct PreAuthTransactionView: View {
                 .disableAutocorrection(true)
                 .modifier(TextFieldStyled())
             
+            TextField("Device Id", text: $deviceId)
+                .disableAutocorrection(true)
+                .modifier(TextFieldStyled())
+            
         }
         .padding()
     }
@@ -52,7 +57,8 @@ struct PreAuthTransactionView_Previews: PreviewProvider {
         PreAuthTransactionView(
             amount: .constant("9.99"),
             paymentType: .constant(.cash),
-            orderId: .constant("1234")
+            orderId: .constant("1234"),
+            deviceId: .constant("abcd")
         )
         .previewLayout(.fixed(width: 300, height: 200))
     }

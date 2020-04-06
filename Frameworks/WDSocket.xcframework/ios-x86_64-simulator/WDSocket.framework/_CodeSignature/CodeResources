@@ -6,35 +6,35 @@
 	<dict>
 		<key>Headers/WDSocket-Swift.h</key>
 		<data>
-		5Tc3H+5XEvDdFpD+eVwrDs9tHjQ=
+		a4MBDGllX/tfObtQLXHBDjKCRCg=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		K4QLPxJ9Wt7NvheGCtrgBvR05os=
+		qKzoSoeQ2mdnm5nxmV75XGGqpwQ=
 		</data>
 		<key>Modules/WDSocket.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		dvI0S+iLWaNIK+3bg9g5tcB1tM4=
+		fdOpYMTwtKJeeMAilpudx+yMHSw=
 		</data>
 		<key>Modules/WDSocket.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		sNvxqZDTqVDtOqWbdeT1L6c+e60=
+		cWdJEuhH/eD2AKs4kcEztaQHgMc=
 		</data>
 		<key>Modules/WDSocket.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		CIhMUxxP8QKIV/6VWFMW1cDcQG0=
+		n+4QY1AWQITlmgxhBA2Hb2bGZ1Y=
 		</data>
 		<key>Modules/WDSocket.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		dvI0S+iLWaNIK+3bg9g5tcB1tM4=
+		fdOpYMTwtKJeeMAilpudx+yMHSw=
 		</data>
 		<key>Modules/WDSocket.swiftmodule/x86_64.swiftinterface</key>
 		<data>
-		sNvxqZDTqVDtOqWbdeT1L6c+e60=
+		cWdJEuhH/eD2AKs4kcEztaQHgMc=
 		</data>
 		<key>Modules/WDSocket.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		CIhMUxxP8QKIV/6VWFMW1cDcQG0=
+		n+4QY1AWQITlmgxhBA2Hb2bGZ1Y=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -43,49 +43,49 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			df0tfyuZFzFjBOXe0MfwjFvAlW9O7xSCQQqUVmccCss=
+			2osc/MzJG+1PhylnEipYJbGqVXnJQjArUe/gFMUazhI=
 			</data>
 		</dict>
 		<key>Modules/WDSocket.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			cGaU+tXpaW7HICW6LdRgJGXm829flhvW1PM9orzuK7o=
+			ufioOe5bOnfcbTf7XzkNE+fnNQzcFyGgqBCsIDXvz1c=
 			</data>
 		</dict>
 		<key>Modules/WDSocket.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			rKoekFLrVEwXfq9VYRStkJQdPGRWJ9m2yawdsEwHCMo=
+			KNjQqQOdocefzPnPFiPeZCSHMpoa7hB1LhcHZcWT7KY=
 			</data>
 		</dict>
 		<key>Modules/WDSocket.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QKIq1N0nGpoquh0kI7nVDN+eLfz+0LNEuWVgcJRjKig=
+			4Su6q0ttkX/YJVfRv+0N/HX4i6Dtq9BhKK2kDTVDp8Q=
 			</data>
 		</dict>
 		<key>Modules/WDSocket.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			cGaU+tXpaW7HICW6LdRgJGXm829flhvW1PM9orzuK7o=
+			ufioOe5bOnfcbTf7XzkNE+fnNQzcFyGgqBCsIDXvz1c=
 			</data>
 		</dict>
 		<key>Modules/WDSocket.swiftmodule/x86_64.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			rKoekFLrVEwXfq9VYRStkJQdPGRWJ9m2yawdsEwHCMo=
+			KNjQqQOdocefzPnPFiPeZCSHMpoa7hB1LhcHZcWT7KY=
 			</data>
 		</dict>
 		<key>Modules/WDSocket.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QKIq1N0nGpoquh0kI7nVDN+eLfz+0LNEuWVgcJRjKig=
+			4Su6q0ttkX/YJVfRv+0N/HX4i6Dtq9BhKK2kDTVDp8Q=
 			</data>
 		</dict>
 	</dict>

@@ -15,6 +15,7 @@ struct InstallmentTransactionView: View {
     @Binding var paymentType: EcrTypes.PaymentType?
     @Binding var tenure: String
     @Binding var orderId: String
+    @Binding var deviceId: String
 
     var body: some View{
         VStack(alignment: .center, spacing: 10) {
@@ -40,6 +41,10 @@ struct InstallmentTransactionView: View {
                 .disableAutocorrection(true)
                 .modifier(TextFieldStyled())
             
+            TextField("Device Id", text: $deviceId)
+                .disableAutocorrection(true)
+                .modifier(TextFieldStyled())
+            
         }
         .padding()
     }
@@ -58,7 +63,8 @@ struct InstallmentTransactionView_Previews: PreviewProvider {
             amount: .constant("9.99"),
             paymentType: .constant(.cash),
             tenure: .constant("6"),
-            orderId: .constant("1234")
+            orderId: .constant("1234"),
+            deviceId: .constant("abcd")
         )
         .previewLayout(.fixed(width: 300, height: 300))
     }

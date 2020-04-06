@@ -15,6 +15,7 @@ let kEcrPort: String = "kEcrPort"
 
 public enum ActionType: String, CaseIterable {
     case echo = "Echo"
+    case pairing = "Pairing"
     case sale = "Sale"
     case preAuth = "Pre-Auth"
     case refund = "Refund"
@@ -42,6 +43,7 @@ class TransactionViewModel: ObservableObject {
         }
     }
     
+    @Published var deviceId: String = ""
     @Published var amount: String = ""
     @Published var selectedPaymentType: EcrTypes.PaymentType?
     @Published var order: String = ""
@@ -113,23 +115,28 @@ class TransactionViewModel: ObservableObject {
         // FIXME: - Validate input date before creating requests
         switch transactionType {
         case .echo:
-            log(request: EcrModel.Echo.Request())
-            handle(publisher: ecr.echo().eraseToAnyPublisher())
+            log(request: EcrModel.Echo.Request(deviceId: deviceId))
+            handle(publisher: ecr.echo(deviceId: deviceId).eraseToAnyPublisher())
+        case .pairing:
+            let request = EcrModel.Pairing.RequestBody(deviceId: deviceId)
+            log(request: EcrModel.Pairing.Request(requestBody: request))
+            handle(publisher: ecr.pairing(request).eraseToAnyPublisher())
         case .settlement:
-            log(request: EcrModel.Settlement.Request())
-            handle(publisher: ecr.settlement().eraseToAnyPublisher())
+            log(request: EcrModel.Settlement.Request(deviceId: deviceId))
+            handle(publisher: ecr.settlement(deviceId: deviceId).eraseToAnyPublisher())
         case .getLastTransaction:
-        log(request: EcrModel.GetLastTransaction.Request())
-            handle(publisher: ecr.getLastTransaction().eraseToAnyPublisher())
+        log(request: EcrModel.GetLastTransaction.Request(deviceId: deviceId))
+            handle(publisher: ecr.getLastTransaction(deviceId: deviceId).eraseToAnyPublisher())
         case .getLastSettlement:
-            log(request: EcrModel.GetLastSettlement.Request())
-            handle(publisher: ecr.getLastSettlement().eraseToAnyPublisher())
+            log(request: EcrModel.GetLastSettlement.Request(deviceId: deviceId))
+            handle(publisher: ecr.getLastSettlement(deviceId: deviceId).eraseToAnyPublisher())
         case .sale:
             guard let paymentType = validatePaymentType() else { return }
             let request = EcrModel.Sale.RequestBody(
                 transactionAmount: amount,
                 paymentType: paymentType,
-                orderId: order
+                orderId: order,
+                deviceId: deviceId
             )
             perform(request: request, action: ecr.sale(_:))
         case .refund:
@@ -137,7 +144,8 @@ class TransactionViewModel: ObservableObject {
             let request = EcrModel.Refund.RequestBody(
                 transactionAmount: amount,
                 paymentType: paymentType,
-                orderId: order
+                orderId: order,
+                deviceId: deviceId
             )
             perform(request: request, action: ecr.refund(_:))
         case .installment:
@@ -146,7 +154,8 @@ class TransactionViewModel: ObservableObject {
                 transactionAmount: amount,
                 paymentType: paymentType,
                 tenure: tenure,
-                orderId: order
+                orderId: order,
+                deviceId: deviceId
             )
             perform(request: request, action: ecr.installment(_:))
         case .preAuth:
@@ -154,7 +163,8 @@ class TransactionViewModel: ObservableObject {
             let request = EcrModel.PreAuth.RequestBody(
                 transactionAmount: amount,
                 paymentType: paymentType,
-                orderId: order
+                orderId: order,
+                deviceId: deviceId
             )
             perform(request: request, action: ecr.preAuth(_:))
         case .void:
@@ -163,7 +173,8 @@ class TransactionViewModel: ObservableObject {
                 transactionAmount: amount,
                 paymentType: paymentType,
                 invoiceNumber: invoiceNumber,
-                orderId: order
+                orderId: order,
+                deviceId: deviceId
             )
             perform(request: request, action: ecr.void(_:))
         default:
@@ -300,16 +311,19 @@ struct ContentView: View {
     
     var transactionViewContent: AnyView {
         switch viewModel.transactionType {
-        case .echo, .settlement, .getLastSettlement, .getLastTransaction:
+        case .pairing, .echo, .settlement, .getLastSettlement, .getLastTransaction:
             return AnyView(
-                EmptyView()
+                PairingView(
+                    deviceId: $viewModel.deviceId
+                )
             )
         case .sale:
             return AnyView(
                 SaleTransactionView(
                     amount: $viewModel.amount,
                     paymentType: $viewModel.selectedPaymentType,
-                    orderId: $viewModel.order
+                    orderId: $viewModel.order,
+                    deviceId: $viewModel.deviceId
                 )
             )
         case .refund:
@@ -317,7 +331,8 @@ struct ContentView: View {
                 RefundTransactionView(
                     amount: $viewModel.amount,
                     paymentType: $viewModel.selectedPaymentType,
-                    orderId: $viewModel.order
+                    orderId: $viewModel.order,
+                    deviceId: $viewModel.deviceId
                 )
             )
         case .installment:
@@ -326,7 +341,8 @@ struct ContentView: View {
                     amount: $viewModel.amount,
                     paymentType: $viewModel.selectedPaymentType,
                     tenure: $viewModel.tenure,
-                    orderId: $viewModel.order
+                    orderId: $viewModel.order,
+                    deviceId: $viewModel.deviceId
                 )
             )
         case .preAuth:
@@ -334,7 +350,8 @@ struct ContentView: View {
                 PreAuthTransactionView(
                     amount: $viewModel.amount,
                     paymentType: $viewModel.selectedPaymentType,
-                    orderId: $viewModel.order
+                    orderId: $viewModel.order,
+                    deviceId: $viewModel.deviceId
                 )
             )
         case .void:
@@ -343,7 +360,8 @@ struct ContentView: View {
                     amount: $viewModel.amount,
                     paymentType: $viewModel.selectedPaymentType,
                     invoiceNumber: $viewModel.invoiceNumber,
-                    orderId: $viewModel.order
+                    orderId: $viewModel.order,
+                    deviceId: $viewModel.deviceId
                 )
             )
         default:
